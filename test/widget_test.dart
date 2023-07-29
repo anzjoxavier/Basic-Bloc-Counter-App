@@ -1,13 +1,15 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:bloctutorialapp/Counter/Counter_cubit.dart';
+import 'package:bloctutorialapp/Counter/internet_cubit.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group("CounterCubit", () {
     late CounterCubit counterCubit;
-
+    late InternetCubit internetCubit;
     setUp(() {
-      counterCubit = CounterCubit();
+      internetCubit = InternetCubit(connectivity: connectivity);
+      counterCubit = CounterCubit(internetCubit: internetCubit);
     });
     tearDown(() {
       counterCubit.close();
@@ -17,17 +19,18 @@ void main() {
           CounterState(counterValue: 0, wasIncremented: false));
     });
 
-    blocTest("Increment Operation", build: () => counterCubit,
-    act: (cubit)=>cubit.increment(),
-    expect: () => [CounterState(counterValue: 1, wasIncremented: true)],
+    blocTest(
+      "Increment Operation",
+      build: () => counterCubit,
+      act: (cubit) => cubit.increment(),
+      expect: () => [CounterState(counterValue: 1, wasIncremented: true)],
     );
 
-    blocTest("Decrement Operation", build: () => counterCubit,
-    act: (cubit)=>cubit.decrement(),
-    expect: () => [CounterState(counterValue: -1, wasIncremented: false)],
+    blocTest(
+      "Decrement Operation",
+      build: () => counterCubit,
+      act: (cubit) => cubit.decrement(),
+      expect: () => [CounterState(counterValue: -1, wasIncremented: false)],
     );
-
-
-
   });
 }

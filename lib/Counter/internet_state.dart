@@ -7,10 +7,13 @@ abstract class InternetState extends Equatable {
   List<Object> get props => [];
 }
 
-class InternetInitial extends InternetState {}
+class InternetLoading extends InternetState {}
 
-class InternetConnected extends InternetState{}
-
-class InternetDisconnected extends InternetState{
-  
+class InternetConnected extends InternetState {
+  final ConnectedType connectedType;
+  @override
+  List<Object> get props => [connectedType];
+  const InternetConnected(this.connectedType);
 }
+
+class InternetDisconnected extends InternetState {}
